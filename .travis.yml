@@ -30,8 +30,8 @@ before_install:
 # let's have two parallel builds. One with ucs4 disabled and the other
 # enabling it
 env:
-  - ENABLE_UCS4=
-  - ENABLE_UCS4=--enable-ucs4
+#  - ENABLE_UCS4=
+#  - ENABLE_UCS4=--enable-ucs4
   # a third build for cross-compilation
   - MINGW=true
   
