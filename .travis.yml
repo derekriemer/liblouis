@@ -7,6 +7,17 @@ dist: trusty
 
 language: c
 
+# let's have two parallel builds. One with ucs4 disabled and the other
+# enabling it
+matrix:
+  include:
+    # - compiler: gcc
+    # - compiler: gcc
+    #   env: ENABLE_UCS4=--enable-ucs4
+    # a third build for cross-compilation
+    - compiler: i586-mingw32msvc-gcc
+      env: BUILD_MINGW=yes
+
 before_install:
   - sudo apt-get update -qq
   # cross-compilation
@@ -29,20 +40,12 @@ before_install:
       sudo apt-get install -y libyaml-dev;
     fi
 
-# let's have two parallel builds. One with ucs4 disabled and the other
-# enabling it
-env:
-#  - ENABLE_UCS4=
-#  - ENABLE_UCS4=--enable-ucs4
-  # a third build for cross-compilation
-  - BUILD_MINGW=yes
-  
 script:
   - if [ "$BUILD_MINGW" == yes ]; then
       ./autogen.sh &&
       export CPPFLAGS="-I/$HOME/build/win32/libyaml/include/" &&
       export LDFLAGS="-L/$HOME/build/win32/libyaml/lib/" &&
-      ./configure --host i586-mingw32msvc --with-yaml &&
+      ./configure --host i586-mingw32msvc $ENABLE_UCS4 --with-yaml &&
       make LDFLAGS="$$LDFLAGS -avoid-version -Xcompiler -static-libgcc" &&
       make check;
     else
