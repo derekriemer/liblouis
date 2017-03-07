@@ -26,7 +26,7 @@ before_install:
       make &&
       make install;
     else
-      sudo apt-get install -y libyaml-dev
+      sudo apt-get install -y libyaml-dev;
     fi
 
 # let's have two parallel builds. One with ucs4 disabled and the other
