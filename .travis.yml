@@ -41,6 +41,7 @@ before_install:
     fi
 
 script:
+  - cd $TRAVIS_BUILD_DIR
   - if [ "$BUILD_MINGW" == yes ]; then
       ./autogen.sh &&
       export CPPFLAGS="-I/$HOME/build/win32/libyaml/include/" &&
